@@ -1,0 +1,5 @@
+provider = dict(
+    server = "http://foor.bar:83",
+    username = "USER",
+    password = "PASS"
+)
