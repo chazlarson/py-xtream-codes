@@ -1,4 +1,3 @@
-import dbutils
 import requests 
 import datetime
 import xtream
@@ -15,8 +14,7 @@ x.password = config.provider['password']
 
 r = x.authenticate()
 
-data = r.json() 
-print x.get_authenticate_URL()
+data = r.json()
 
 user_username = data['user_info']['username']
 user_status = data['user_info']['status']
