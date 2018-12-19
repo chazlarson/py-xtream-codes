@@ -43,6 +43,7 @@ server_timezone = data['server_info']['timezone']
 server_rtmp_port = data['server_info']['rtmp_port']
 server_port = data['server_info']['port']
 
+
 # printing the output 
 print("Account information:\n")
 
@@ -74,6 +75,7 @@ total_streams = 0
 print("\n\nCategory information:\n")
 
 r = x.categories(x.liveType)
+
 try:
   live_category_data = r.json() 
   s = x.streams(x.liveType)
@@ -101,6 +103,7 @@ except ValueError as err:
   print("Value error: {0}".format(err))
 
 r = x.categories(x.vodType)
+
 try:
   vod_category_data = r.json() 
   s = x.streams(x.vodType)
@@ -172,10 +175,15 @@ for i, entry in enumerate(vod_category_data):
 # {u'direct_source': u'', u'rating': u'', u'added': u'1518032077', u'num': 1776, u'name': u'Linda Sweet Bare Love', u'stream_type': u'movie', u'stream_id': 17254, u'custom_sid': None, u'stream_icon': u'', u'container_extension': u'mp4', u'category_id': u'102', u'rating_5based': 0}
     print "{0:<75s} {1:>5d} {2:>4s} {3:>4s}".format(stream['name'].encode('utf-8'),stream['stream_id'],stream['stream_type'],stream['container_extension'])
 
-# for i, entry in enumerate(series_category_data):
-#   print '\n\nStreams for series category {} - {}:\n'.format(entry['category_id'],entry['category_name'])
-#   cat_streams_data = [item for item in series_stream_data if item['category_id'] == entry['category_id']]
-#   print "{0:<75s} {1:>5s} {2:>4s} {3:>4s} ".format('name','ID','Type','Ext')
-#   for i, stream in enumerate(cat_streams_data):
-#     print stream
-#     print "{0:<75s} {1:>5d} {2:>4s} {3:>4s}".format(stream['name'].encode('utf-8'),stream['stream_id'],stream['stream_type'],stream['container_extension'])
+for i, entry in enumerate(series_category_data):
+  print '\n\nEpisodes for series category {} - {}:\n'.format(entry['category_id'],entry['category_name'])
+  cat_streams_data = [item for item in series_stream_data if item['category_id'] == entry['category_id']]
+  print "{0:<75s} {1:>5s} {2:>3s} {3:>3s} ".format('name','ID','S','E')
+  for i, stream in enumerate(cat_streams_data):
+    r = x.seriesInfoByID(stream['series_id'])
+    series_info = r.json()
+    season_count = len(series_info['episodes'])
+    episode_count = 0
+    for i, entry in enumerate(series_info['episodes']):
+      episode_count += len(series_info['episodes'][str(entry)])
+    print "{0:<75s} {1:>5d} {2:>3d} {3:>3d} ".format(stream['name'].encode('utf-8'),stream['series_id'],season_count,episode_count)

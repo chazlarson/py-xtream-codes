@@ -9,6 +9,10 @@ liveType = "Live"
 vodType = "VOD"
 seriesType = "Series"
 
+class XCCache:
+    authData = {}
+
+cc = XCCache()    
 # Note: The API Does not provide Full links to the requested stream. You have to build the url to the stream in order to play it.
 # 
 # For Live Streams the main format is
@@ -27,7 +31,8 @@ seriesType = "Series"
 
 # Authentication returns information about the account and server:
 def authenticate():
-    r = requests.get(get_authenticate_URL()) 
+    r = requests.get(get_authenticate_URL())
+    cc.authData = r.json()
     return r
 
 # GET Stream Categories
@@ -42,7 +47,7 @@ def categories(streamType):
     else:
         theURL = ""
 
-    r = requests.get(theURL) 
+    r = requests.get(theURL)
     return r
 
 # GET Streams
@@ -76,7 +81,7 @@ def streamsByCategory(streamType, category_id):
     return r
 
 # GET SERIES Info
-def Series_info_by_ID(series_id):  
+def seriesInfoByID(series_id):  
     r = requests.get(get_series_info_URL_by_ID(series_id)) 
     return r
 # The seasons array, might be filled or might be completely empty. 
@@ -84,26 +89,26 @@ def Series_info_by_ID(series_id):
 # In your APP if you want to display the series, you have to take that from the episodes array.
 
 # GET VOD Info
-def VOD_info_by_ID(vod_id):  
+def vodInfoByID(vod_id):  
     r = requests.get(get_VOD_info_URL_by_ID(vod_id)) 
     return r
 
 # GET short_epg for LIVE Streams (same as stalker portal, prints the next X EPG that will play soon)
-def live_epg_by_stream(stream_id):  
+def liveEpgByStream(stream_id):  
     r = requests.get(get_live_epg_URL_by_stream(stream_id)) 
     return r
 
-def live_epg_by_stream_and_limit(stream_id, limit):  
+def liveEpgByStreamAndLimit(stream_id, limit):  
     r = requests.get(get_live_epg_URL_by_stream_and_limit(stream_id, limit)) 
     return r
 
 #  GET ALL EPG for LIVE Streams (same as stalker portal, but it will print all epg listings regardless of the day)
-def all_live_epg_by_stream():  
-    r = requests.get(get_all_live_epg_URL_by_stream()) 
+def allLiveEpgByStream(stream_id):  
+    r = requests.get(get_all_live_epg_URL_by_stream(stream_id)) 
     return r
 
 # Full EPG List for all Streams
-def all_epg():  
+def allEpg():  
     r = requests.get(get_all_epg_URL()) 
     return r
 
