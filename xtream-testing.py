@@ -19,6 +19,12 @@ def EPGString(theNum):
     theString = stream['epg_channel_id']
   return theString
 
+def VODName(json):
+  try:
+    return json['name']
+  except KeyError:
+    return 0
+
 providername = config.provider['name']
 
 x = xtream
@@ -201,6 +207,7 @@ print 'Total Stream Count:     {}\n'.format(total_streams)
 NoneType = type(None)
 
 if (config.display_live_info == 1):
+  live_category_data.sort(key=VODName)
   for i, entry in enumerate(live_category_data):
     print '\n\nStreams for Live category {} - {}:\n'.format(entry['category_id'],entry['category_name'])
     cat_streams_data = [item for item in live_stream_data if item['category_id'] == entry['category_id']]
@@ -214,6 +221,7 @@ if (config.display_vod_info == 1):
   for i, entry in enumerate(vod_category_data):
     print '\n\nStreams for VOD category {} - {}:\n'.format(entry['category_id'],entry['category_name'])
     cat_streams_data = [item for item in vod_stream_data if item['category_id'] == entry['category_id']]
+    cat_streams_data.sort(key=VODName)
     print "{0:<75s} {1:>5s} {2:>5s} {3:>4s} {4:<6s} {5:<6s} {6:<9s} ".format('name','ID','Type','Ext','Video','Audio','W x H')
     print u"==================================================================================================================="
     for i, stream in enumerate(cat_streams_data):
