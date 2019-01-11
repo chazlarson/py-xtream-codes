@@ -7,7 +7,7 @@ import config
 
 x = xtream
 
-# Iris
+# login details
 x.server   = config.provider['server']
 x.username = config.provider['username']
 x.password = config.provider['password']
