@@ -1,5 +1,18 @@
 provider = dict(
-    server = "http://foor.bar:83",
-    username = "USER",
-    password = "PASS"
+    server = "http://foo.bar:83",
+    username = "Floor",
+    password = "Tuomas"
 )
+
+# write json responses to files
+write_files = 1
+
+# maybe you don't want all that detail
+display_series_info = 0
+display_live_info = 0
+display_vod_info = 1
+
+# write the series info json responses to files
+write_series_info_files = 0
+write_live_info_files = 0
+write_vod_info_files = 0
