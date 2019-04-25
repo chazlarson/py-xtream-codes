@@ -141,5 +141,5 @@ live_epg_data = r.json()
 
 1. Clone the repo locally
 1. Copy `config.py.example` to `config.py`.
-1. edit config as required
+1. edit `config.py` as required
 1. run `python xtream-testing.py`
