@@ -136,3 +136,10 @@ live_epg_data = r.json()
 r = x.all_epg()
 live_epg_data = r.json()
 ```
+
+# Quickstart
+
+1. Clone the repo locally
+1. Copy `config.example` to `config`.
+1. edit config as required
+1. run `python xtream-testing.py`
